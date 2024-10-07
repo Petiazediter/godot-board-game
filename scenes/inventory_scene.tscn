@@ -1,0 +1,184 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqugigk3l1bst"]
+
+[ext_resource type="Theme" uid="uid://bspmlvl5swl0i" path="res://Panel.tres" id="1_xybno"]
+[ext_resource type="PackedScene" uid="uid://cv8xptd76jhtk" path="res://CharacterItemSlot.tscn" id="2_uucnv"]
+[ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="3_vpfym"]
+
+[node name="MainNode2D" type="Node2D"]
+position = Vector2(1, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="CharacterContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 30
+
+[node name="SkillPanel" type="PanelContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer"]
+layout_mode = 2
+
+[node name="SkillsContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/SkillPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/SkillPanel/SkillsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/SkillPanel/SkillsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Character Information"
+
+[node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/SkillPanel/SkillsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Health: 100"
+
+[node name="Label4" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/SkillPanel/SkillsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sanity: 100"
+
+[node name="Label5" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/SkillPanel/SkillsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Strenght: 100"
+
+[node name="CharacterSlots" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("1_xybno")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="CharacterItemSlot" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_uucnv")]
+layout_mode = 2
+slot_type = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/CharacterContainer/CharacterSlots/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_xybno")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("1_xybno")
+
+[node name="ItemListContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ItemListScrollContainer" type="ScrollContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ItemListGrid" type="GridContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect6" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect7" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect8" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect9" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")
+
+[node name="TextureRect10" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ItemListContainer/ItemListScrollContainer/ItemListGrid"]
+layout_mode = 2
+texture = ExtResource("3_vpfym")

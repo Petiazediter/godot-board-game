@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bspmlvl5swl0i"]
+
+[sub_resource type="Gradient" id="Gradient_vg38q"]
+interpolation_mode = 2
+colors = PackedColorArray(0.151808, 0.119675, 0.00469785, 1, 0.221583, 0.17014, 7.21961e-08, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4gdj7"]
+noise_type = 0
+seed = 4
+frequency = 0.0004
+fractal_octaves = 3
+fractal_lacunarity = 3.87
+fractal_gain = 2.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gvy7m"]
+color_ramp = SubResource("Gradient_vg38q")
+noise = SubResource("FastNoiseLite_4gdj7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5us0k"]
+texture = SubResource("NoiseTexture2D_gvy7m")
+
+[resource]
+MarginContainer/constants/margin_bottom = 20
+MarginContainer/constants/margin_left = 20
+MarginContainer/constants/margin_right = 20
+MarginContainer/constants/margin_top = 20
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_5us0k")
