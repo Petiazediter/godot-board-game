@@ -32,6 +32,9 @@ func update_line():
 		var player_position = player.global_position + Vector2(board.tile_set.tile_size / 2)
 		var player_point = board.get_point(player_position);
 		if board.astar.has_point(player_point):
-			var path_points = board.get_astar_path(player_position, last_position, true, -1);
+			var result = board.get_astar_path(player_position, last_position, true, -1);
+			if result.error:
+				# You can't reach the destination because there is a unit there!
+				print('ERROR', result.error_path)
 			line.position = Vector2.ZERO
-			line.points = path_points.slice(1, path_points.size())
+			line.points = result.paths;

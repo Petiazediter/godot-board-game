@@ -30,10 +30,8 @@ func check_selected() -> void:
 
 func set_selected(value: bool) -> void:
 	is_selected = value;
-	print('selected', value, character_id, character_list.character_manager.id_selected_character);
 	select_btn.modulate = Color.GREEN if value else Color.RED;
 
 func _on_select_button_up() -> void:
-	print('select new id', character_id)
 	character_list.character_manager.change_selected_character.emit(character_id);
 	
