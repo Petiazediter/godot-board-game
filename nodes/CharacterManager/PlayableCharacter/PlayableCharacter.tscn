@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bay4o8vqqc0gj"]
+
+[ext_resource type="Script" path="res://nodes/CharacterManager/PlayableCharacter/playable_character.gd" id="1_4fjj0"]
+[ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="2_u8wqk"]
+
+[node name="Character" type="Node2D"]
+position = Vector2(768, 512)
+script = ExtResource("1_4fjj0")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_u8wqk")
+offset = Vector2(64, 64)

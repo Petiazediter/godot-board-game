@@ -58,7 +58,7 @@ func connect_cardinals(center: int) -> void:
 		if cardinal_point != center and astar.has_point(cardinal_point):
 			astar.connect_points(center, cardinal_point, true);
 
-func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = true, steps: int = -1):
+func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = true, steps: int = -1) -> Array:
 	if should_avoid_obstacles:
 		set_disable_points_for_obstacles(true);
 	var astar_path = astar.get_point_path(get_point(from), get_point(to))

@@ -4,7 +4,7 @@ class_name World
 @onready var board: Board = $Layer0
 @onready var astar_debug = $AstarDebug
 @onready var line = $Line2D
-@onready var player = $Player
+@onready var character_manager: CharacterManager = $CharacterManager
 
 var last_position := Vector2(0,0);
 
@@ -27,9 +27,11 @@ func _physics_process(delta: float) -> void:
 			update_line();
 
 func update_line():
-	var player_position = player.global_position + Vector2(board.tile_set.tile_size / 2)
-	var player_point = board.get_point(player_position);
-	if board.astar.has_point(player_point):
-		var path_points = board.get_astar_path(player_position, last_position, true, -1);
-		line.position = Vector2.ZERO
-		line.points = path_points
+	if character_manager.id_selected_character >= 0:
+		var player = character_manager.players[character_manager.id_selected_character];
+		var player_position = player.global_position + Vector2(board.tile_set.tile_size / 2)
+		var player_point = board.get_point(player_position);
+		if board.astar.has_point(player_point):
+			var path_points = board.get_astar_path(player_position, last_position, true, -1);
+			line.position = Vector2.ZERO
+			line.points = path_points.slice(1, path_points.size())
