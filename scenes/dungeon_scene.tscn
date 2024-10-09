@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=4 uid="uid://c3infstfxxmom"]
 
-[ext_resource type="Script" path="res://nodes/World/world.gd" id="1_3s3vt"]
+[ext_resource type="Script" path="res://nodes/World/WorldLogic.gd" id="1_3s3vt"]
 [ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="1_6dklj"]
-[ext_resource type="Script" path="res://nodes/CharacterManager/PlayableCharacter/playable_character.gd" id="1_j8ss1"]
+[ext_resource type="Script" path="res://nodes/CharacterManager/PlayableCharacter/PlayableCharacterLogic.gd" id="1_j8ss1"]
 [ext_resource type="Texture2D" uid="uid://db2303dtijlba" path="res://tilemap1.png" id="1_m128l"]
 [ext_resource type="Script" path="res://nodes/AstarTileMap/AstarTileMap.gd" id="3_c1bek"]
-[ext_resource type="Script" path="res://nodes/CharacterManager/character_manager.gd" id="4_8fqq0"]
+[ext_resource type="Script" path="res://nodes/CharacterManager/CharacterManagerLogic.gd" id="4_8fqq0"]
 [ext_resource type="PackedScene" uid="uid://bay4o8vqqc0gj" path="res://nodes/CharacterManager/PlayableCharacter/PlayableCharacter.tscn" id="5_np5tb"]
 [ext_resource type="Script" path="res://nodes/AstarDebug/AstarDebug.gd" id="7_nqwlc"]
-[ext_resource type="Script" path="res://nodes/AvailableCharacterList/available_characters_list_logic.gd" id="8_2dj0u"]
+[ext_resource type="Script" path="res://nodes/AvailableCharacterList/AvailableCharactersListLogic.gd" id="8_2dj0u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bvpq2"]
 texture = ExtResource("1_m128l")

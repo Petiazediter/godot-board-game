@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dqanbs1adoafo"]
 
 [ext_resource type="Theme" uid="uid://bspmlvl5swl0i" path="res://Panel.tres" id="1_5sh11"]
-[ext_resource type="Script" path="res://nodes/AvailableCharacterList/AvailableCharacter/available_character_item_logic.gd" id="1_15ayj"]
+[ext_resource type="Script" path="res://nodes/AvailableCharacterList/AvailableCharacter/AvailableCharacterItemLogic.gd" id="1_15ayj"]
 [ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="2_2e4nx"]
 
 [node name="AvailableCharacterItem" type="PanelContainer"]
