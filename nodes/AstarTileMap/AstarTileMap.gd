@@ -8,6 +8,7 @@ const DIRECTIONS := [Vector2.RIGHT, Vector2.UP, Vector2.LEFT, Vector2.DOWN]
 var astar: AStar2D = AStar2D.new();
 var obstacles: Array[Vector2] = [];
 var unit_positions: Array[Vector2] = [];
+var dynamic_obstacles: Array[Vector2] = [];
 
 func _ready() -> void:
 	character_manager.on_update_characters.connect(update);
@@ -16,6 +17,7 @@ func _ready() -> void:
 func update() -> void:
 	create_pathfinding_points();
 	register_units();
+	register_dynamic_obstacles();
 
 func create_pathfinding_points() -> void:
 	astar.clear()
@@ -40,7 +42,12 @@ func register_units():
 	for player in character_manager.players:
 		if player is PlayableCharacter:
 			unit_positions.append(player.global_position);
-	
+
+func register_dynamic_obstacles():
+	for dynamic_obstacle in get_children():
+		if dynamic_obstacle is DynamicObstacle:
+			dynamic_obstacles.append(dynamic_obstacle.global_position)
+
 func is_obstacle(cell_data: TileData): 
 	return cell_data.get_custom_data("is_walkable") == false;
 
@@ -48,6 +55,8 @@ func position_has_obstacle(obstacle_position: Vector2, ignore_obstacle_position 
 	if obstacle_position == ignore_obstacle_position: return false
 	for obstacle in obstacles:
 		if obstacle == obstacle_position: return true
+	for dynamic_obstacle in dynamic_obstacles:
+		if dynamic_obstacle == obstacle_position: return true
 	return false
 	
 func position_has_unit(unit_position: Vector2, ignore_unit_position = null) -> bool:
@@ -87,9 +96,11 @@ func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = t
 	if should_avoid_obstacles:
 		set_disable_points_for_units(true, to);
 		set_disable_points_for_obstacles(true);
+		set_disable_points_for_dynamic_obstacles(true);
 	var astar_path = astar.get_point_path(get_point(from), get_point(to))
 	set_disable_points_for_obstacles(false);
 	set_disable_points_for_units(false, to);
+	set_disable_points_for_dynamic_obstacles(false);
 	
 	var paths: Array = set_path_length(astar_path, steps);
 	var is_error: bool = false;
@@ -111,6 +122,10 @@ func set_path_length(point_path: Array, max_distance: int) -> Array:
 func set_disable_points_for_obstacles(value: bool):
 	for obstacle in obstacles:
 		astar.set_point_disabled(get_point(obstacle), value);
+
+func set_disable_points_for_dynamic_obstacles(value: bool):
+	for dynamic_obstacle in dynamic_obstacles:
+		astar.set_point_disabled(get_point(dynamic_obstacle), value);
 
 func set_disable_points_for_units(value: bool, ignore_pos: Vector2):
 	for unit in unit_positions:
