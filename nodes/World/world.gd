@@ -17,7 +17,7 @@ func _input(event: InputEvent) -> void:
 func round_pos(vec2: Vector2) -> Vector2:
 	return (vec2 / Vector2(board.tile_set.tile_size)).floor() * Vector2(board.tile_set.tile_size)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var mouse_position = get_global_mouse_position();
 	var rounded: Vector2 = round_pos(mouse_position) + Vector2(board.tile_set.tile_size / 2);
 	if !(rounded == last_position):
