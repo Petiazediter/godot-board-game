@@ -2,6 +2,8 @@ extends Node2D
 class_name DynamicObstacle
 
 var is_destroyable: bool = false;
+var is_interactable: bool = false;
+
 @onready var board: Board = self.get_parent();
 
 func on_destroy() -> void:
