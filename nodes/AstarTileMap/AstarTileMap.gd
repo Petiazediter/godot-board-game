@@ -5,6 +5,8 @@ class_name Board;
 
 const DIRECTIONS := [Vector2.RIGHT, Vector2.UP, Vector2.LEFT, Vector2.DOWN]
 
+signal on_board_changed;
+
 var astar: AStar2D = AStar2D.new();
 var obstacles: Array[Vector2] = [];
 var unit_positions: Array[Vector2] = [];
@@ -13,6 +15,7 @@ var dynamic_obstacles: Array[Vector2] = [];
 func _ready() -> void:
 	character_manager.on_update_characters.connect(update);
 	update();
+	on_board_changed.connect(update);
 
 func update() -> void:
 	create_pathfinding_points();
