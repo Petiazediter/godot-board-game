@@ -21,7 +21,7 @@ func _ready() -> void:
 
 func _change_selected_character(id: int) -> void:
 	id_selected_character = id;
-	on_change_selected_character.emit(id);
+	on_change_selected_character.emit();
 
 func _input(event: InputEvent) -> void:
 	if event.is_action("move_to_grid"):

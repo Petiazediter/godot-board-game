@@ -12,15 +12,12 @@ func position_has_obstacle(pos: Vector2):
 
 func _draw() -> void:
 	if not astar is AStar2D: return
-	var offset = Vector2(64, 64);
+	var offset: Vector2 = Vector2( board.tile_set.tile_size / 2);
 	for point_id in astar.get_point_ids():
 		if astar.is_point_disabled(point_id): continue;
 		var point_position: Vector2 = astar.get_point_position(point_id);
 		if position_has_obstacle(point_position): continue;
-		
-		draw_circle(point_position, 4, Color.WHITE, false, 4);
-		draw_string(SystemFont.new(), point_position - offset, "{point_id} | {pos}".format([ ["point_id", point_id], ["pos", point_position ]]))
-		
+		draw_circle(point_position + offset, 4, Color.WHITE, false, 4);
 		var point_connections: PackedInt64Array = astar.get_point_connections(point_id);
 		var connected_positions = []
 		for connected_point in point_connections:
@@ -30,10 +27,11 @@ func _draw() -> void:
 			connected_positions.append(connected_point_position)
 		
 		for connected_poistion in connected_positions:
-			draw_line(point_position, connected_poistion, Color.WHITE, 2);
+			draw_line(point_position + offset, connected_poistion + offset, Color.WHITE, 2);
 
 	var mouse_position = get_global_mouse_position();
-	draw_string(SystemFont.new(), mouse_position, "{last_position} | {point_id}".format([["last_position", world.last_position], ["point_id", world.board.get_point(world.last_position)] ]) )  #str(world.last_position))
+	if world.last_position:
+		draw_string(SystemFont.new(), mouse_position, "{last_position} | {point_id}".format([["last_position", world.last_position], ["point_id", world.board.get_point(world.last_position)] ]) )  #str(world.last_position))
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	queue_redraw();

@@ -10,9 +10,9 @@ var is_selected: bool = false;
 @onready var select_btn: Button = $MarginContainer/VBoxContainer/Button;
 @onready var character_list: AvailableCharactersList = self.get_parent();
 
-func set_character_name(name: String) -> void:
-	character_name = name;
-	character_name_label.text = name;
+func set_character_name(new_name: String) -> void:
+	character_name = new_name;
+	character_name_label.text = new_name;
 	
 func set_character_id(id: int) -> void:
 	character_id = id;
@@ -22,7 +22,7 @@ func _ready() -> void:
 	character_list.character_manager.on_change_selected_character.connect(_on_change_selected_character);
 	check_selected();
 
-func _on_change_selected_character(id: int) -> void:
+func _on_change_selected_character() -> void:
 	check_selected();
 
 func check_selected() -> void:

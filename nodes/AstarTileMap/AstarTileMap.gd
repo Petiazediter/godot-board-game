@@ -30,7 +30,7 @@ func get_used_cell_global_positions() -> Array[Vector2] :
 	var cell_positions : Array[Vector2] = [];
 	for cell in cells:
 		var data: TileData = get_cell_tile_data(cell);
-		var cell_position: Vector2 = global_position + map_to_local(cell);
+		var cell_position: Vector2 = global_position + map_to_local(cell) - Vector2(tile_set.tile_size / 2);
 		cell_positions.append(cell_position);
 		if is_obstacle(data):
 			obstacles.append(cell_position);
@@ -39,7 +39,7 @@ func get_used_cell_global_positions() -> Array[Vector2] :
 func register_units():
 	for player in character_manager.players:
 		if player is PlayableCharacter:
-			unit_positions.append(player.global_position + Vector2((tile_set.tile_size/2)));
+			unit_positions.append(player.global_position);
 	
 func is_obstacle(cell_data: TileData): 
 	return cell_data.get_custom_data("is_walkable") == false;
@@ -61,15 +61,15 @@ func get_point(point_position: Vector2) -> int:
 	var b := int(point_position.y)
 	return unique_number_from_two_int(a,b);
 
-func unique_number_from_two_int(a: int,b: int):
+func unique_number_from_two_int(a: int,b: int) -> int:
 	# source: https://en.wikipedia.org/wiki/Pairing_function
 	return (a * a + a + (2 * (a * b)) + 3*b + b*b ) / 2
 
 func connect_cardinals(center: int) -> void:
-	var position = astar.get_point_position(center);
+	var center_position = astar.get_point_position(center);
 	for direction in DIRECTIONS:
-		var position2 = direction * Vector2(tile_set.tile_size)
-		var cardinal_point := get_point(position + position2)
+		var neighbor_position = direction * Vector2(tile_set.tile_size)
+		var cardinal_point := get_point(center_position + neighbor_position)
 		if cardinal_point != center and astar.has_point(cardinal_point):
 			astar.connect_points(center, cardinal_point, true);
 
@@ -78,10 +78,10 @@ class AstarPathResult:
 	var error_path: Vector2;
 	var paths: Array;
 	
-	func _init(paths: Array, error: bool, error_path: Vector2) -> void:
-		self.error = error;
-		self.error_path = error_path;
-		self.paths = paths;
+	func _init(_paths: Array, _error: bool, _error_path: Vector2) -> void:
+		self.error = _error;
+		self.error_path = _error_path;
+		self.paths = _paths;
 
 func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = true, steps: int = -1) -> AstarPathResult:
 	if should_avoid_obstacles:
