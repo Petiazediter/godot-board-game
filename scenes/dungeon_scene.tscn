@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://c3infstfxxmom"]
+[gd_scene load_steps=15 format=4 uid="uid://c3infstfxxmom"]
 
 [ext_resource type="Script" path="res://nodes/World/WorldLogic.gd" id="1_3s3vt"]
 [ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="1_6dklj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://nodes/AstarDebug/AstarDebug.gd" id="7_nqwlc"]
 [ext_resource type="Script" path="res://nodes/AvailableCharacterList/AvailableCharactersListLogic.gd" id="8_2dj0u"]
 [ext_resource type="Script" path="res://nodes/AstarTileMap/AstarGridVisibility/AstarGridVisibilityLogic.gd" id="9_34ekb"]
+[ext_resource type="Script" path="res://nodes/DraggableCamera/DraggableCamera.gd" id="12_ps0li"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bvpq2"]
 texture = ExtResource("1_m128l")
@@ -28,13 +29,14 @@ sources/0 = SubResource("TileSetAtlasSource_bvpq2")
 [node name="DungeonScene" type="Node2D"]
 script = ExtResource("1_3s3vt")
 
-[node name="Board" type="TileMapLayer" parent="." node_paths=PackedStringArray("character_manager", "astar_grid")]
+[node name="Board" type="TileMapLayer" parent="." node_paths=PackedStringArray("camera", "character_manager", "astar_grid")]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAABAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAABAAAAAAAFAAMAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAQAAAABAAAAAAADAAQAAAABAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAQAAAAAAAAAAAAHAAMAAAAAAAAAAAAHAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAQAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAAMAAUAAAAAAAAAAAANAAUAAAAAAAAAAAANAAQAAAAAAAAAAAANAAMAAAAAAAAAAAANAAIAAAAAAAAAAAANAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAAAAAAAAAAMAAMAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAIAAAAAAAAAAAAJAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAAJAAIAAAABAAAAAAAJAAMAAAABAAAAAAAKAAIAAAABAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAMAAYAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_gk0af")
 script = ExtResource("3_c1bek")
+camera = NodePath("../Camera2D")
 character_manager = NodePath("../CharacterManager")
-astar_grid = NodePath("../AstarGridVisibilty")
+astar_grid = NodePath("../Camera2D/AstarGridVisibilty")
 
 [node name="ObstacleObject" type="Node2D" parent="Board"]
 position = Vector2(896, 384)
@@ -57,23 +59,6 @@ script = ExtResource("1_j8ss1")
 texture = ExtResource("1_6dklj")
 offset = Vector2(64, 64)
 
-[node name="AstarGridVisibilty" type="Control" parent="." node_paths=PackedStringArray("board")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("9_34ekb")
-board = NodePath("../Board")
-
-[node name="AstarDebug" type="Control" parent="." node_paths=PackedStringArray("board")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("7_nqwlc")
-board = NodePath("../Board")
-metadata/_edit_use_anchors_ = true
-
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2(384, 256)
 points = PackedVector2Array(384, 256)
@@ -91,3 +76,23 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 script = ExtResource("8_2dj0u")
 character_manager = NodePath("../../CharacterManager")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("12_ps0li")
+
+[node name="AstarGridVisibilty" type="Control" parent="Camera2D" node_paths=PackedStringArray("board")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_34ekb")
+board = NodePath("../../Board")
+
+[node name="AstarDebug" type="Control" parent="Camera2D" node_paths=PackedStringArray("board")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_nqwlc")
+board = NodePath("../../Board")
+metadata/_edit_use_anchors_ = true

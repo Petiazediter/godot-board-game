@@ -1,6 +1,7 @@
 extends TileMapLayer
 class_name Board;
 
+@export var camera: DraggableCamera;
 @export var character_manager: CharacterManager;
 @export var astar_grid: AstarGrid;
 
