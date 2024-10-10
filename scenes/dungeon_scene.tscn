@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://c3infstfxxmom"]
+[gd_scene load_steps=14 format=4 uid="uid://c3infstfxxmom"]
 
 [ext_resource type="Script" path="res://nodes/World/WorldLogic.gd" id="1_3s3vt"]
 [ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="1_6dklj"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bay4o8vqqc0gj" path="res://nodes/CharacterManager/PlayableCharacter/PlayableCharacter.tscn" id="5_np5tb"]
 [ext_resource type="Script" path="res://nodes/AstarDebug/AstarDebug.gd" id="7_nqwlc"]
 [ext_resource type="Script" path="res://nodes/AvailableCharacterList/AvailableCharactersListLogic.gd" id="8_2dj0u"]
+[ext_resource type="Script" path="res://nodes/AstarTileMap/AstarGridVisibility/AstarGridVisibilityLogic.gd" id="9_34ekb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bvpq2"]
 texture = ExtResource("1_m128l")
@@ -27,18 +28,19 @@ sources/0 = SubResource("TileSetAtlasSource_bvpq2")
 [node name="DungeonScene" type="Node2D"]
 script = ExtResource("1_3s3vt")
 
-[node name="Layer0" type="TileMapLayer" parent="." node_paths=PackedStringArray("character_manager")]
+[node name="Board" type="TileMapLayer" parent="." node_paths=PackedStringArray("character_manager", "astar_grid")]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAABAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAABAAAAAAAFAAMAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAQAAAABAAAAAAADAAQAAAABAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAQAAAAAAAAAAAAHAAMAAAAAAAAAAAAHAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAQAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAAMAAUAAAAAAAAAAAANAAUAAAAAAAAAAAANAAQAAAAAAAAAAAANAAMAAAAAAAAAAAANAAIAAAAAAAAAAAANAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAAAAAAAAAAMAAMAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAIAAAAAAAAAAAAJAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAAJAAIAAAABAAAAAAAJAAMAAAABAAAAAAAKAAIAAAABAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAMAAYAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_gk0af")
 script = ExtResource("3_c1bek")
 character_manager = NodePath("../CharacterManager")
+astar_grid = NodePath("../AstarGridVisibilty")
 
-[node name="ObstacleObject" type="Node2D" parent="Layer0"]
+[node name="ObstacleObject" type="Node2D" parent="Board"]
 position = Vector2(896, 384)
 script = ExtResource("4_kwyi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="Layer0/ObstacleObject"]
+[node name="Sprite2D" type="Sprite2D" parent="Board/ObstacleObject"]
 texture = ExtResource("1_6dklj")
 offset = Vector2(64, 64)
 
@@ -55,13 +57,21 @@ script = ExtResource("1_j8ss1")
 texture = ExtResource("1_6dklj")
 offset = Vector2(64, 64)
 
+[node name="AstarGridVisibilty" type="Control" parent="." node_paths=PackedStringArray("board")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_34ekb")
+board = NodePath("../Board")
+
 [node name="AstarDebug" type="Control" parent="." node_paths=PackedStringArray("board")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("7_nqwlc")
-board = NodePath("../Layer0")
+board = NodePath("../Board")
 metadata/_edit_use_anchors_ = true
 
 [node name="Line2D" type="Line2D" parent="."]

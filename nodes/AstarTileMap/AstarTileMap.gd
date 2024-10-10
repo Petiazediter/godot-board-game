@@ -2,6 +2,7 @@ extends TileMapLayer
 class_name Board;
 
 @export var character_manager: CharacterManager;
+@export var astar_grid: AstarGrid;
 
 const DIRECTIONS := [Vector2.RIGHT, Vector2.UP, Vector2.LEFT, Vector2.DOWN]
 
@@ -94,42 +95,56 @@ func connect_cardinals(center: int) -> void:
 			astar.connect_points(center, cardinal_point, true);
 
 class AstarPathResult:
-	var error: bool;
-	var error_path: Vector2;
-	var paths: Array;
+	var error_paths: Array[Vector2];
+	var paths: Array[Vector2];
 	
-	func _init(_paths: Array, _error: bool, _error_path: Vector2) -> void:
-		self.error = _error;
-		self.error_path = _error_path;
+	func _init(_paths: Array[Vector2],_error_paths: Array[Vector2]) -> void:
+		self.error_paths = _error_paths;
 		self.paths = _paths;
 
-func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = true, steps: int = -1) -> AstarPathResult:
+func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = true, steps: int = -1, include_self: bool = false) -> AstarPathResult:
 	if should_avoid_obstacles:
 		set_disable_points_for_units(true, to);
 		set_disable_points_for_obstacles(true);
 		set_disable_points_for_dynamic_obstacles(true, to);
-	var astar_path = astar.get_point_path(get_point(from), get_point(to))
+	var path: Array[Vector2] = []
+	var astar_path = astar.get_point_path(get_point(from), get_point(to));
+	for _path: Vector2 in astar_path:
+		path.append(_path);
+
 	set_disable_points_for_obstacles(false);
 	set_disable_points_for_units(false, to);
 	set_disable_points_for_dynamic_obstacles(false, to);
 	
-	var paths: Array = set_path_length(astar_path, steps);
-	var is_error: bool = false;
-	var error_path: Vector2;
-	
-	if paths.size() > 0:
-		var last = paths[paths.size() - 1];
-		if (position_has_unit(last)) or position_has_obstacle(last):
-			is_error = true;
-			error_path = to;
-			paths.resize(paths.size() - 1);
-	return AstarPathResult.new(paths,is_error,error_path);
+	return validate_path(path, steps, include_self);
 
-func set_path_length(point_path: Array, max_distance: int) -> Array:
-	if max_distance < 0: return point_path
-	var new_size := int(min(point_path.size(), max_distance))
-	point_path.resize(new_size)
-	return point_path
+func validate_path(point_path: Array[Vector2], max_distance: int, include_self: bool) -> AstarPathResult:
+	# if selecting itself or nothing;
+	if point_path.size() <= 1:
+		return AstarPathResult.new([], []);
+
+	var paths: Array[Vector2] = [];
+	var error_paths: Array[Vector2] = [];
+	for index in point_path.size():
+		var path = point_path[index];
+		# if we don't want to include the starting position;
+		if !include_self and path == point_path[0]: continue;
+		if is_position_occupied(path) or ((index + 1) > max_distance and max_distance >= 0):
+			error_paths.append(path);
+		else: paths.append(path);
+	return AstarPathResult.new(paths,error_paths);
+
+func is_position_occupied(pos: Vector2):
+	return (
+		position_has_obstacle(pos) or
+		position_has_unit(pos)
+	)
+
+# func set_path_length(point_path: Array[Vector2], max_distance: int) -> Array[Vector2]:
+# 	if max_distance < 0: return point_path
+# 	var new_size := int(min(point_path.size(), max_distance))
+# 	point_path.resize(new_size)
+# 	return point_path
 
 func set_disable_points_for_obstacles(value: bool):
 	for obstacle in obstacles:

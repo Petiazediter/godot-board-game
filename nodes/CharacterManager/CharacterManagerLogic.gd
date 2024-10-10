@@ -24,5 +24,5 @@ func _change_selected_character(id: int) -> void:
 	on_change_selected_character.emit();
 
 func _input(event: InputEvent) -> void:
-	if event.is_action("move_to_grid"):
+	if event.is_action_pressed("move_to_grid"):
 		print('move to grid!');
