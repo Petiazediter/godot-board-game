@@ -1,11 +1,10 @@
 extends Control
 
-var world: World;
+@export var character_movement_manager: CharacterMovementManager;
 @export var board: Board;
 @onready var astar: AStar2D = board.astar if board else null;
 
 func _ready() -> void:
-	world = board.get_parent();
 	board.camera.on_camera_change.connect(queue_redraw);
 
 func position_has_obstacle(pos: Vector2):
@@ -31,8 +30,8 @@ func _draw() -> void:
 			draw_line(point_position + offset, connected_poistion + offset, Color.WHITE, 2, true);
 
 	var mouse_position = get_global_mouse_position();
-	if world.last_position:
-		draw_string(SystemFont.new(), mouse_position - global_position, "{last_position} | {point_id}".format([["last_position", world.last_position], ["point_id", world.board.get_point(world.last_position)] ]) )  #str(world.last_position))
+	if character_movement_manager.last_position:
+		draw_string(SystemFont.new(), mouse_position - global_position, "{last_position} | {point_id}".format([["last_position", character_movement_manager.last_position], ["point_id", character_movement_manager.board.get_point(character_movement_manager.last_position)] ]) )  #str(world.last_position))
 
 func _process(_delta: float) -> void:
 	queue_redraw();

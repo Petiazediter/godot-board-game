@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://c3infstfxxmom"]
+[gd_scene load_steps=16 format=4 uid="uid://c3infstfxxmom"]
 
 [ext_resource type="Script" path="res://nodes/World/WorldLogic.gd" id="1_3s3vt"]
 [ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="1_6dklj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://nodes/AstarDebug/AstarDebug.gd" id="7_nqwlc"]
 [ext_resource type="Script" path="res://nodes/AvailableCharacterList/AvailableCharactersListLogic.gd" id="8_2dj0u"]
 [ext_resource type="Script" path="res://nodes/AstarTileMap/AstarGridVisibility/AstarGridVisibilityLogic.gd" id="9_34ekb"]
+[ext_resource type="Script" path="res://nodes/CharacterManager/CharacterMovementManager/CharacterMovemenetManager.gd" id="9_jktph"]
 [ext_resource type="Script" path="res://nodes/DraggableCamera/DraggableCamera.gd" id="12_ps0li"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bvpq2"]
@@ -59,6 +60,11 @@ script = ExtResource("1_j8ss1")
 texture = ExtResource("1_6dklj")
 offset = Vector2(64, 64)
 
+[node name="CharacterMovementManager" type="Node2D" parent="." node_paths=PackedStringArray("character_manager", "board")]
+script = ExtResource("9_jktph")
+character_manager = NodePath("../CharacterManager")
+board = NodePath("../Board")
+
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2(384, 256)
 points = PackedVector2Array(384, 256)
@@ -88,11 +94,12 @@ offset_bottom = 40.0
 script = ExtResource("9_34ekb")
 board = NodePath("../../Board")
 
-[node name="AstarDebug" type="Control" parent="Camera2D" node_paths=PackedStringArray("board")]
+[node name="AstarDebug" type="Control" parent="Camera2D" node_paths=PackedStringArray("character_movement_manager", "board")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("7_nqwlc")
+character_movement_manager = NodePath("../../CharacterMovementManager")
 board = NodePath("../../Board")
 metadata/_edit_use_anchors_ = true
