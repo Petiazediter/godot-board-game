@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://bay4o8vqqc0gj"]
+[gd_scene load_steps=4 format=3 uid="uid://bay4o8vqqc0gj"]
 
 [ext_resource type="Script" path="res://nodes/CharacterManager/PlayableCharacter/PlayableCharacterLogic.gd" id="1_4fjj0"]
 [ext_resource type="Texture2D" uid="uid://cs7fscaau8xqv" path="res://icon.svg" id="2_u8wqk"]
 
-[node name="Character" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g6mdf"]
+
+[node name="Character" type="CharacterBody2D"]
 position = Vector2(768, 512)
 script = ExtResource("1_4fjj0")
+movement_speed = null
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_u8wqk")
 offset = Vector2(64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(64, 64)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_g6mdf")
