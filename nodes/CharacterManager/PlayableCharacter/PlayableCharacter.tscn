@@ -8,7 +8,6 @@
 [node name="Character" type="CharacterBody2D"]
 position = Vector2(768, 512)
 script = ExtResource("1_4fjj0")
-movement_speed = null
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_u8wqk")

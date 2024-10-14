@@ -59,7 +59,6 @@ movement_speed = 150.0
 [node name="Character2" type="CharacterBody2D" parent="CharacterManager"]
 position = Vector2(1536, 512)
 script = ExtResource("1_j8ss1")
-movement_speed = null
 
 [node name="PlayerSprite" type="Sprite2D" parent="CharacterManager/Character2"]
 texture = ExtResource("1_6dklj")

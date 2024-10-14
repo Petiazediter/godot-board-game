@@ -12,7 +12,6 @@ func move_character(path: Array[Vector2]) -> void:
 	path_to_move = path;
 	current_direction = 0;
 	is_movement_in_progress = path.size() > 0;
-	character_manager.action_in_progress.on_action_end.emit();
 
 func _physics_process(delta: float) -> void:
 	if is_movement_in_progress:
@@ -24,4 +23,5 @@ func _physics_process(delta: float) -> void:
 			current_direction = current_direction + 1;
 			
 			if current_direction == path_to_move.size():
+				character_manager.action_in_progress.on_action_end.emit();
 				is_movement_in_progress = false;

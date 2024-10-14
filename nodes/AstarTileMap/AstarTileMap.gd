@@ -42,7 +42,7 @@ func get_used_cell_global_positions() -> Array[Vector2] :
 
 func register_units():
 	units.clear();
-
+	print('register units called!');
 	for player in character_manager.players:
 		if player is PlayableCharacter:
 			units.append(player.global_position);

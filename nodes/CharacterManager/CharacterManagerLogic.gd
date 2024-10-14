@@ -6,10 +6,14 @@ signal change_selected_character(id: int);
 signal on_change_selected_character(id: int);
 signal on_update_characters;
 
-var action_in_progress;
+var action_in_progress = null;
 
 var players: Array[PlayableCharacter] = [];
 var id_selected_character: int = -1;
+@onready var character_movement_manager = $CharacterMovementManager
+
+func get_is_action_in_progress() -> bool:
+	return action_in_progress != null;
 
 func _ready() -> void:
 	change_selected_character.connect(_change_selected_character);
