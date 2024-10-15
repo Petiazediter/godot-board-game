@@ -3,6 +3,7 @@ class_name CharacterMovementManager;
 
 @onready var character_manager: CharacterManager = get_parent();
 @export var board: Board;
+@export var character_movement_speed: float = 100;
 
 var last_position = Vector2.ZERO;
 

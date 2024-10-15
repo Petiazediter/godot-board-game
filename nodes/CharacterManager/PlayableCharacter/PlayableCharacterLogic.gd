@@ -2,7 +2,11 @@ extends CharacterBody2D
 class_name PlayableCharacter
 
 @onready var character_manager: CharacterManager = get_parent();
-@export var movement_speed: float = 100.0;
+var character_movement_manager: CharacterMovementManager 
+
+func _ready() -> void:
+	character_movement_manager = character_manager.character_movement_manager;
+	print('speed', character_movement_manager.character_movement_speed)
 
 var path_to_move: Array[Vector2] = [];
 var current_direction: int = 0;
@@ -16,7 +20,7 @@ func move_character(path: Array[Vector2]) -> void:
 func _physics_process(delta: float) -> void:
 	if is_movement_in_progress:
 		var dir = path_to_move[current_direction];
-		global_position = global_position.move_toward(dir, delta * movement_speed);
+		global_position = global_position.move_toward(dir, delta * character_movement_manager.character_movement_speed);
 		if (global_position == dir):
 			var point_id = character_manager.board.get_point(path_to_move[current_direction]);
 			global_position = character_manager.board.astar.get_point_position(point_id);

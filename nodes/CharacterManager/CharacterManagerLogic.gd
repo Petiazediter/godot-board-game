@@ -10,7 +10,7 @@ var action_in_progress = null;
 
 var players: Array[PlayableCharacter] = [];
 var id_selected_character: int = -1;
-@onready var character_movement_manager = $CharacterMovementManager
+@export var character_movement_manager: CharacterMovementManager;
 
 func get_is_action_in_progress() -> bool:
 	return action_in_progress != null;
