@@ -44,17 +44,17 @@ func _physics_process(delta: float) -> void:
 		on_camera_change.emit();
 		if position == auto_move_target_position:
 			auto_move_target_position = null;
-	else:
-		on_camera_change.emit();
-		zoom = lerp(
-			zoom,
-			target_zoom * Vector2.ONE,
-			ZOOM_RATE * delta
+	on_camera_change.emit();
+	zoom = lerp(
+		zoom,
+		target_zoom * Vector2.ONE,
+		ZOOM_RATE * delta
+	)
+	on_camera_change.emit();
+	set_physics_process(
+		not is_equal_approx(zoom.x, target_zoom) and (auto_move_target_position != null)
 		)
-		on_camera_change.emit();
-		set_physics_process(
-			not is_equal_approx(zoom.x, target_zoom)
-			)
 
 func auto_focus(pos: Vector2) -> void:
+	set_physics_process(true)
 	auto_move_target_position = pos;

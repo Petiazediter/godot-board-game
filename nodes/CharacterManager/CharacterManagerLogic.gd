@@ -13,6 +13,8 @@ var id_selected_character: int = -1;
 @export var character_movement_manager: CharacterMovementManager;
 @export var main_camera: DraggableCamera;
 
+@export var auto_focus_camera_on_char_change: bool = true;
+
 func get_is_action_in_progress() -> bool:
 	return action_in_progress != null;
 
@@ -25,7 +27,6 @@ func _ready() -> void:
 	if players.size() >= 1: 
 		id_selected_character = 0;
 		change_selected_character.emit(id_selected_character);
-		main_camera.auto_focus(players[id_selected_character].global_position);
 
 func get_selected_character() -> PlayableCharacter:
 	return players[id_selected_character];
@@ -33,6 +34,8 @@ func get_selected_character() -> PlayableCharacter:
 func _change_selected_character(id: int) -> void:
 	id_selected_character = id;
 	on_change_selected_character.emit();
+	if auto_focus_camera_on_char_change:
+		main_camera.auto_focus(players[id].position);
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_to_grid"):
