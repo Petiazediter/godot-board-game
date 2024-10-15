@@ -5,6 +5,13 @@ class_name Board;
 @export var character_manager: CharacterManager;
 @export var astar_grid: AstarGrid;
 
+# PATH FINDING CONSTS
+
+const CAN_LAND_ON_OTHER_UNIT = false;
+const CAN_GO_THROUGH_OTHER_UNIT = true;
+
+#####################
+
 const DIRECTIONS := [Vector2.RIGHT, Vector2.UP, Vector2.LEFT, Vector2.DOWN]
 
 signal on_board_changed;
@@ -105,7 +112,7 @@ class AstarPathResult:
 
 func get_astar_path(from: Vector2, to: Vector2, should_avoid_obstacles: bool = true, steps: int = -1, include_self: bool = false) -> AstarPathResult:
 	if should_avoid_obstacles:
-		set_disable_points_for_units(true, to);
+		set_disable_points_for_units(!CAN_GO_THROUGH_OTHER_UNIT, to);
 		set_disable_points_for_obstacles(true);
 		set_disable_points_for_dynamic_obstacles(true, to);
 	var path: Array[Vector2] = []
@@ -130,8 +137,21 @@ func validate_path(point_path: Array[Vector2], max_distance: int, include_self: 
 		var path = point_path[index];
 		# if we don't want to include the starting position;
 		if !include_self and path == point_path[0]: continue;
-		if is_position_occupied(path) or ((index + 1) > max_distance and max_distance >= 0):
+		if ((index + 1) > max_distance and max_distance >= 0):
 			error_paths.append(path);
+		elif is_position_occupied(path):
+			if position_has_unit(path):
+				if (index == point_path.size()-1):
+					if CAN_LAND_ON_OTHER_UNIT:
+						paths.append(path);
+					else:
+						error_paths.append(path)
+				elif !CAN_GO_THROUGH_OTHER_UNIT:
+					error_paths.append(path)
+				else:
+					paths.append(path);
+			else:
+				error_paths.append(path)
 		else: paths.append(path);
 	return AstarPathResult.new(paths,error_paths);
 
