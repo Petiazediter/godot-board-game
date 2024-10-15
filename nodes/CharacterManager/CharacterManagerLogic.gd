@@ -11,6 +11,7 @@ var action_in_progress = null;
 var players: Array[PlayableCharacter] = [];
 var id_selected_character: int = -1;
 @export var character_movement_manager: CharacterMovementManager;
+@export var main_camera: DraggableCamera;
 
 func get_is_action_in_progress() -> bool:
 	return action_in_progress != null;
@@ -24,6 +25,7 @@ func _ready() -> void:
 	if players.size() >= 1: 
 		id_selected_character = 0;
 		change_selected_character.emit(id_selected_character);
+		main_camera.auto_focus(players[id_selected_character].global_position);
 
 func get_selected_character() -> PlayableCharacter:
 	return players[id_selected_character];
