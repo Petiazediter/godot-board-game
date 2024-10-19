@@ -37,10 +37,6 @@ func _change_selected_character(id: int) -> void:
 	if auto_focus_camera_on_char_change:
 		main_camera.auto_focus(players[id].position);
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("move_to_grid"):
-		print('move to grid!');
-
 func on_current_action_start() -> void:
 	print('An action is started!');
 
