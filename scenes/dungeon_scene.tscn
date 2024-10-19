@@ -50,7 +50,7 @@ script = ExtResource("4_kwyi4")
 texture = ExtResource("1_6dklj")
 offset = Vector2(64, 64)
 
-[node name="CharacterManager" type="Node2D" parent="." node_paths=PackedStringArray("board", "character_movement_manager", "main_camera")]
+[node name="CharacterManager" type="Node" parent="." node_paths=PackedStringArray("board", "character_movement_manager", "main_camera")]
 script = ExtResource("4_8fqq0")
 board = NodePath("../Board")
 character_movement_manager = NodePath("../ActionManager/CharacterMovementManager")
@@ -71,7 +71,7 @@ position = Vector2(64, 64)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_qfhvg")
 
-[node name="ActionManager" type="Node2D" parent="." node_paths=PackedStringArray("character_manager")]
+[node name="ActionManager" type="Node" parent="." node_paths=PackedStringArray("character_manager")]
 script = ExtResource("9_8xw22")
 character_manager = NodePath("../CharacterManager")
 
