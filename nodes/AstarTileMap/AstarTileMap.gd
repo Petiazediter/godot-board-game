@@ -14,7 +14,12 @@ const CAN_GO_THROUGH_OTHER_UNIT = true;
 
 const DIRECTIONS := [Vector2.RIGHT, Vector2.UP, Vector2.LEFT, Vector2.DOWN]
 
+@export var shadow_board: BoardShadows;
+
+# External change to listen to;
 signal on_board_changed;
+# Internal change to emit;
+signal on_board_updated;
 
 var astar: AStar2D = AStar2D.new();
 var obstacles: Array[Vector2] = [];
@@ -30,6 +35,7 @@ func update() -> void:
 	create_pathfinding_points();
 	register_units();
 	register_obstacles();
+	on_board_updated.emit();
 
 func create_pathfinding_points() -> void:
 	astar.clear()
@@ -49,10 +55,11 @@ func get_used_cell_global_positions() -> Array[Vector2] :
 
 func register_units():
 	units.clear();
-	print('register units called!');
 	for player in character_manager.players:
 		if player is PlayableCharacter:
 			units.append(player.global_position);
+			var distance_coords = get_tiles_in_distance_from_map_pos(local_to_map(player.global_position), 2) as Array[Vector2]
+			shadow_board.illuminate_tiles(distance_coords);
 
 func register_obstacles():
 	dynamic_obstacles.clear();
@@ -161,12 +168,6 @@ func is_position_occupied(pos: Vector2):
 		position_has_unit(pos)
 	)
 
-# func set_path_length(point_path: Array[Vector2], max_distance: int) -> Array[Vector2]:
-# 	if max_distance < 0: return point_path
-# 	var new_size := int(min(point_path.size(), max_distance))
-# 	point_path.resize(new_size)
-# 	return point_path
-
 func set_disable_points_for_obstacles(value: bool):
 	for obstacle in obstacles:
 		astar.set_point_disabled(get_point(obstacle), value);
@@ -185,3 +186,13 @@ func set_disable_points_for_units(value: bool, ignore_pos: Vector2):
 	for unit in units:
 		if unit != ignore_pos:
 			astar.set_point_disabled(get_point(unit), value);
+
+func get_tiles_in_distance_from_map_pos(point_pos: Vector2, max_distance: int ):
+	var positions = get_used_cells();
+	var ret_val = []
+	for cell in positions:
+		var distance = sqrt(pow((cell.x - point_pos.x),2) + pow((cell.y - point_pos.y),2)) # dist = sqrt((x2-x1)^2 + (y2-y1)^2)
+		# print(distance);
+		if distance <= max_distance:
+			ret_val.append(cell)
+	return ret_val;

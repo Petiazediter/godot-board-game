@@ -6,7 +6,6 @@ var character_movement_manager: CharacterMovementManager
 
 func _ready() -> void:
 	character_movement_manager = character_manager.character_movement_manager;
-	print('speed', character_movement_manager.character_movement_speed)
 
 var path_to_move: Array[Vector2] = [];
 var current_direction: int = 0;
@@ -26,6 +25,8 @@ func _physics_process(delta: float) -> void:
 			global_position = character_manager.board.astar.get_point_position(point_id);
 			current_direction = current_direction + 1;
 			
+			# Illuminate the area!
+
 			if current_direction == path_to_move.size():
 				character_manager.action_in_progress.on_action_end.emit();
 				is_movement_in_progress = false;
